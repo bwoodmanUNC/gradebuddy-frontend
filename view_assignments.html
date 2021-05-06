@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/styles/all.css">
+    <link rel="stylesheet" href="/styles/submissions.css">
+</head>
+
+<body>
+    <div id="nav"></div>
+    <div id="wrapper">
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/babel" src="scripts/fetchers.js"></script>
+    <script type="text/babel" src="components/components.js"></script>
+    <script type="text/babel">
+        let RenderDOM = async function () {
+            const assignments = await get_class_assignments(15);
+            console.log(assignments);
+            ReactDOM.render(<MainList data={assignments.data} type='assignments'></MainList>, document.getElementById('wrapper'));
+            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
+        }
+        RenderDOM();
+    </script>
+</body>
+
+</html>

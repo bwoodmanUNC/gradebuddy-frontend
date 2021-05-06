@@ -1,0 +1,62 @@
+p {
+    color:rgba(0, 0, 0, 0.788);
+}
+
+body {
+    background-color: #BCD8DC;
+
+}
+
+.box {
+    background-color: #FFFCFF;
+}
+
+.nav {
+    background-color: #FFFCFF;
+}
+
+.upload-label {
+    cursor: pointer;
+    color: #FFD685;
+}
+
+.upload-button {
+    position: fixed;
+    top: -100em;
+}
+
+#wrapper {
+    padding-top: 30px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.navbar-link {
+    color: rgba(0, 0, 0, 0.788);
+}
+
+.navbar-link:not(.is-arrowless)::after {
+    border-color:#FFD685;
+
+}
+
+.button.is-primary {
+    background-color:#FFD685;
+    color: rgba(0, 0, 0, 0.788);
+}
+
+.assignment_list_item {
+    display: grid;
+    grid-template-columns: .5fr .35fr .15fr;
+}
+
+.submission_list_item{
+    display: grid;
+    grid-template-columns: .5fr .35fr .15fr;
+}
+
+#indv-upload-comp {
+    display: grid;
+    grid-template-columns: .6fr .4fr;
+    padding-bottom: 30px;
+}
