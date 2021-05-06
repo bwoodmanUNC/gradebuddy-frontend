@@ -101,10 +101,24 @@ class AssignmentListItem extends React.Component {
 }
 
 class IndvUpload extends React.Component {
+    renderSidebar() {
+        let overall_grade = 0.0;
+        this.props.data.grades.forEach(x => {
+            overall_grade += x.overall_grade;
+        });
+
+        overall_grade = overall_grade / this.props.data.grades.length * 100;
+
+        return (
+            <IndvUploadSidebar overall_grade={overall_grade} rubric_items={this.props.data.upload_info.rubric_items} my_grades={this.props.data.grades.filter(x => x.is_me)[0]}></IndvUploadSidebar>
+        )
+    }
+
     render() {
         return (
             <div id="indv-upload-comp">
                 <IndvUploadFile link={this.props.data.upload_info.link}></IndvUploadFile>
+                {this.renderSidebar()}
             </div>
         )
     }
@@ -115,9 +129,125 @@ class IndvUploadFile extends React.Component {
         return (
             <div className="block">
                 <div class="box">
-                    <img src={this.props.link}></img>
+                    {/* <img src={this.props.link}></img> */}
                 </div>
             </div>
+        )
+    }
+}
+
+class IndvUploadSidebar extends React.Component {
+    constructor(props) {
+        super(props);
+        let reducer = (accumulator, item) => {
+            // console.log(item.overall_grade);
+            return accumulator + item;
+        }
+        this.state = {current_points: this.calculateCurrentPoints(), current_rubric_items: JSON.parse(this.props.my_grades.selected_rubric_items)};
+        console.log(this.state.current_rubric_items);
+        this.current_total_points = Object.values(JSON.parse(this.props.rubric_items)).reduce(reducer);
+    }
+
+    calculateCurrentPoints() {
+        let current_points = 0;
+
+        const rubric_dict = JSON.parse(this.props.rubric_items);
+        let rubric_vals = [];
+        for (let item in rubric_dict) {
+            rubric_vals.push(rubric_dict[item]);
+        }
+
+        const selected_rubric_items = JSON.parse(this.props.my_grades.selected_rubric_items);
+        selected_rubric_items.forEach(x => {
+            current_points += rubric_vals[x];
+            console.log(current_points);
+        })
+        return current_points;
+    }
+
+    renderRubricItems() {
+        const selected_rubric_items = this.state.current_rubric_items;
+        console.log(selected_rubric_items);
+        const rubric_dict = JSON.parse(this.props.rubric_items);
+        let rubric_list = [];
+        let i = 0;
+        for (let item in rubric_dict) {
+            // console.log(item.key);
+            rubric_list.push(<RubricItem name={item} value={rubric_dict[item]} selected={selected_rubric_items.includes(i)} add_callback={this.addUserScore} subtract_callback={this.subtractUserScore} id={i}></RubricItem>);
+            i++;
+        }
+        return rubric_list;
+    }
+
+    addUserScore = (new_points, added_item) => {
+        // let new_points = 0;
+        this.setState({'current_points': new_points + this.state.current_points});
+        this.setState({'current_rubric_items': [...this.state.current_rubric_items, added_item]});
+        console.log(this.state.current_rubric_items);
+    }
+
+    subtractUserScore = (new_points, lost_item) => {
+        // let new_points = 0;
+        this.setState({'current_points': this.state.current_points - new_points});
+        this.setState({'current_rubric_items': this.state.current_rubric_items.filter(x => x !== lost_item)});
+        console.log(this.state.current_rubric_items);
+    }
+
+    render() {
+        // maybe move to constructor?
+        this.all_rubric_items_list = this.renderRubricItems();
+        //
+        return (
+            <div className="block indv-upload-sidebar">
+                <div class="box">
+                    <div className="block">
+                        <h1>Class Grade: <strong>{this.props.overall_grade}%</strong></h1>
+                        <h1>Your Grade: <strong>{this.state.current_points / this.current_total_points * 100}%</strong></h1>
+                    </div>
+                    {this.all_rubric_items_list}
+                    <div id="rubric-save-btn-div" onClick={this.updateUserScore}></div>
+                </div>
+            </div>
+        )
+    }
+}
+
+class RubricItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+
+        this.state.selected = this.props.selected;
+    }
+
+    clicked = () => {
+        if (this.state.selected) {
+            this.props.subtract_callback(this.props.value, this.props.id);
+            this.setState({selected: false});
+        } else {
+            this.props.add_callback(this.props.value, this.props.id);
+            this.setState({selected: true});
+        }
+        ReactDOM.render(<RubricSaveItem></RubricSaveItem>, document.getElementById('rubric-save-btn-div'));
+        // console.log('asdf');
+    }
+
+    render() {
+        return (
+            <div className="block">
+                <div className={"box rubric-item " + (this.state.selected ? 'selected-rubric-item' : '')} onClick={this.clicked}>
+                    <div><p>{this.props.value}</p></div>
+                    <div><p>{this.props.name}</p></div>
+                </div>
+            </div>
+        )
+    }
+}
+
+class RubricSaveItem extends React.Component {
+    render() {
+        return (
+            <button class="button is-primary">Save</button>
         )
     }
 }

@@ -29,7 +29,8 @@
             const id = urlParams.get('id');
             const indv_upload = await get_indv_upload(id);
             console.log(indv_upload);
-            ReactDOM.render(<IndvUpload data={indv_upload.data} type='submissions'></IndvUpload>, document.getElementById('wrapper'));
+            ReactDOM.render(<IndvUpload data={indv_upload.data}></IndvUpload>, document.getElementById('wrapper'));
+            // ReactDOM.render(<IndvUploadSidebar data={indv_upload.data}></IndvUploadSidebar>, document.getElementById('wrapper'));
         }
         RenderDOM();
     </script>

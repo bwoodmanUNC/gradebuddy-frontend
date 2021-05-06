@@ -60,3 +60,23 @@ body {
     grid-template-columns: .6fr .4fr;
     padding-bottom: 30px;
 }
+
+#indv-upload-comp h1 {
+    font-size: 1.5em;
+    /* padding-bottom: 10px; */
+}
+
+.indv-upload-sidebar {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.rubric-item {
+    display: grid;
+    grid-template-columns: .1fr .9fr;
+    cursor: pointer;
+}
+
+.selected-rubric-item {
+    background-color:#FFD685;
+}
