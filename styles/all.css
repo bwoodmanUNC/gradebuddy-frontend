@@ -15,11 +15,6 @@ body {
     background-color: #FFFCFF;
 }
 
-.upload-label {
-    cursor: pointer;
-    color: #FFD685;
-}
-
 .upload-button {
     position: fixed;
     top: -100em;
@@ -36,7 +31,7 @@ body {
 }
 
 .navbar-link:not(.is-arrowless)::after {
-    border-color:#FFD685;
+    border-color:#2E4052;
 
 }
 
@@ -45,14 +40,19 @@ body {
     color: rgba(0, 0, 0, 0.788);
 }
 
+.button.is-primary:hover {
+    background-color: #2E4052;
+}
+
 .assignment_list_item {
     display: grid;
-    grid-template-columns: .5fr .35fr .15fr;
+    grid-template-columns: .7fr .2fr .2fr;
+    align-items: center;
 }
 
 .submission_list_item{
     display: grid;
-    grid-template-columns: .5fr .35fr .15fr;
+    grid-template-columns: .5fr .5fr;
 }
 
 #indv-upload-comp {
@@ -79,4 +79,79 @@ body {
 
 .selected-rubric-item {
     background-color:#FFD685;
+}
+
+#title {
+    display: grid;
+    grid-template-columns: .8fr .2fr;
+    align-items: center;
+}
+
+#title h1 {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#title a {
+    font-weight: bold;
+}
+
+.upload-label {
+    color: #2E4052;
+    cursor: pointer;
+}
+
+.upload-label:after {
+    border: 3px solid transparent;
+    border-radius: 2px;
+    border-right: 0;
+    border-top: 0;
+    content: " ";
+    display: inline-block;
+    height: .625em;
+    pointer-events: none;
+    /* position: absolute; */
+    transform: rotate(-135deg);
+    transform-origin: center;
+    width: .625em;
+    border-color: #2E4052;
+    margin-left: .25em;
+    
+}
+
+a {
+    color: #2E4052;
+    cursor: pointer;
+    /* color: #FFD685; */
+}
+
+a.with-arrow:after {
+    border: 3px solid transparent;
+    border-radius: 2px;
+    border-right: 0;
+    border-top: 0;
+    content: " ";
+    display: inline-block;
+    height: .625em;
+    pointer-events: none;
+    /* position: absolute; */
+    transform: rotate(-135deg);
+    transform-origin: center;
+    width: .625em;
+    border-color: #2E4052;
+    margin-left: .25em;
+}
+
+.list-button {
+    width: 100%;
+}
+
+.new-rubric-item {
+    display: grid;
+    grid-template-columns: .2fr .6fr .2fr;
+    gap: 1em;
+}
+
+.field-label {
+    text-align: left;
 }

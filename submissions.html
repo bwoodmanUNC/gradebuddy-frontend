@@ -20,18 +20,16 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="scripts/redirect_login.js"></script>
     <script type="text/babel" src="scripts/fetchers.js"></script>
     <script type="text/babel" src="components/components.js"></script>
     <script type="text/babel">
         let RenderDOM = async function () {
-            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'));
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
-            const indv_upload = await get_indv_upload(id);
-            console.log(indv_upload);
-            ReactDOM.render(<IndvUpload data={indv_upload.data}></IndvUpload>, document.getElementById('wrapper'));
-            // ReactDOM.render(<IndvUploadSidebar data={indv_upload.data}></IndvUploadSidebar>, document.getElementById('wrapper'));
+            const submissions = await get_submissions(id);
+            console.log(submissions);
+            ReactDOM.render(<MainList data={submissions.data} type='submissions'></MainList>, document.getElementById('wrapper'));
+            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();
     </script>

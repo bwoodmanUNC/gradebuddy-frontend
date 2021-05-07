@@ -24,9 +24,8 @@
     <script type="text/babel" src="components/components.js"></script>
     <script type="text/babel">
         let RenderDOM = async function () {
-            const submissions = await get_submissions(3);
-            console.log(submissions);
-            ReactDOM.render(<MainList data={submissions.data} type='submissions'></MainList>, document.getElementById('wrapper'));
+            const classes = await get_classes();
+            ReactDOM.render(<MainList data={classes.data} type='class'></MainList>, document.getElementById('wrapper'));
             ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();

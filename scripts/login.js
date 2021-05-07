@@ -35,6 +35,9 @@ async function login(callback){
 
 function tokenSuccess(response) {
     localStorage.accessToken = response['access_token'];
+    // exp_date.setSeconds(exp_date.getSeconds() +)
+    localStorage.accessTokenExpiration = Date.now() + (response['exp'] * 1000);
+    window.location.replace('/')
     
 }
 
