@@ -165,7 +165,7 @@ class AssignmentListItem extends React.Component {
                         </label>
                     </div>
                     <div className="list-button">
-                        <a class="button is-primary" href={'/submissions.html?id=' + this.props.id + '&is_owned=' + (this.props.is_owned ? '1' : '0')}>View Submissions: {this.props.upload_number}</a>
+                        <a class="button is-primary" href={'/submissions.html?id=' + this.props.id + '&is_owned=' + this.props.is_owned.toString()}>View Submissions: {this.props.upload_number}</a>
                     </div>
                     {/* <p class="has-text-right">Submissions: {this.props.upload_number}</p> */}
                 </div>
@@ -468,7 +468,7 @@ class NewClassBox extends React.Component {
         const resp = await new_class(this.class_name);
         // console.log(resp);
         if (resp.status === 200) {
-            window.location.replace('/classes')
+            window.location.replace('/classes.html')
         } else if (resp.status === 401) {
             alert('You must be a power user to create a class!');
         }
