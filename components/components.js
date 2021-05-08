@@ -501,7 +501,7 @@ class NewClassBox extends React.Component {
 }
 
 class Navigation extends React.Component {
-    renderLoginArea() {
+    renderLoginArea = () => {
         // alert(Date.now() > localStorage.accessTokenExpiration);
         if (Date.now() > localStorage.accessTokenExpiration) {
             return (
@@ -516,6 +516,13 @@ class Navigation extends React.Component {
                             </a>
                         </div>
                     </div>
+                </div>
+            )
+        } 
+        else {
+            return (
+                <div id="welcome-name">
+                    <p>Welcome back, {this.props.username}</p>
                 </div>
             )
         }

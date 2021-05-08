@@ -168,3 +168,11 @@ a.with-arrow:after {
 .navbar-start {
     height: 100%;
 }
+
+#welcome-name {
+    position: absolute;
+    right: 20px;
+    top: 1em;
+
+    /* float: right; */
+}

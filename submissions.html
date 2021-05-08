@@ -30,8 +30,9 @@
             const is_owned = urlParams.get('is_owned');
             const submissions = await get_submissions(id);
             console.log(submissions);
+            const username = await get_user_name();
+            ReactDOM.render(<Navigation username={username}></Navigation>, document.getElementById('nav'))
             ReactDOM.render(<MainList data={submissions.data} type='submissions' is_owned={is_owned}></MainList>, document.getElementById('wrapper'));
-            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();
     </script>
