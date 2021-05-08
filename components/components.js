@@ -551,7 +551,7 @@ class Navigation extends React.Component {
                             Owned Classes
                         </a>
 
-                        <div class="navbar-item has-dropdown is-hoverable">
+                        {/* <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">
                                 More
                             </a>
@@ -568,7 +568,8 @@ class Navigation extends React.Component {
                                 </a>
                                 <hr class="navbar-divider"></hr>
                             </div>
-                        </div>
+                        </div> */}
+                        <p class="joke">{this.props.joke}</p>
                     </div>
                 </div>
                 {this.renderLoginArea()}

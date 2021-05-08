@@ -176,3 +176,8 @@ a.with-arrow:after {
 
     /* float: right; */
 }
+
+.joke {
+    margin-top: .95em;
+    /* border: 1px solid black; */
+}
