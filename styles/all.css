@@ -55,7 +55,7 @@ body {
     grid-template-columns: .6fr .2fr .2fr;
 }
 
-.submission_list_item{
+.class_list_item{
     display: grid;
     grid-template-columns: .5fr .5fr;
 }
