@@ -1,6 +1,7 @@
 async function login(callback){
     form = '#form'
-    var url = 'http://localhost:8000/token';
+    // var url = 'http://localhost:8000/token';
+    var url = 'https://gradebuddy.herokuapp.com/token';
     var formData = new FormData();
     // $(form).find("input[username]").each(function (index, node) {
     //     formData[node.username] = node.value;
@@ -37,7 +38,7 @@ function tokenSuccess(response) {
     localStorage.accessToken = response['access_token'];
     // exp_date.setSeconds(exp_date.getSeconds() +)
     localStorage.accessTokenExpiration = Date.now() + (response['exp'] * 1000);
-    window.location.replace('/')
+    window.location.replace('/classes.html')
     
 }
 
