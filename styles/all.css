@@ -120,7 +120,7 @@ body {
 }
 
 a {
-    color: #2E4052;
+    color: #2E4052 !important;
     cursor: pointer;
     /* color: #FFD685; */
 }
@@ -154,4 +154,12 @@ a.with-arrow:after {
 
 .field-label {
     text-align: left;
+}
+
+#main-list {
+    padding-bottom: 20px;
+}
+
+.navbar-start {
+    height: 100%;
 }

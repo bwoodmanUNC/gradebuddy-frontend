@@ -1,4 +1,9 @@
 class MainList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {join_code: ''}
+    }
+
     renderSubmissionListItems() {
         let all_items = [];
         for (let i = 0; i < this.props.data.length; i++) {
@@ -17,13 +22,35 @@ class MainList extends React.Component {
         return all_items;
     }
 
-    renderClassListItems() {
+    renderClassListItems(is_owned) {
         let all_items = [];
         for (let i = 0; i < this.props.data.length; i++) {
             console.log(this.props.data[i]);
-            all_items.push(<ClassListItem id={this.props.data[i].id} name={this.props.data[i].name}></ClassListItem>);
+            all_items.push(<ClassListItem id={this.props.data[i].id} name={this.props.data[i].name} is_owned={is_owned}></ClassListItem>);
         }
         return all_items;
+    }
+
+    joinCodeEdit = (e) => {
+        console.log(e.target.value);
+        this.setState({'join_code': e.target.value});
+    }
+
+    joinClass = () => {
+        ReactDOM.render(
+            <div class="field has-addons">
+                <div class="control">
+                    <input class="input" type="text" placeholder="Class Code" onChange={this.joinCodeEdit}></input>
+                </div>
+                <div class="control">
+                    <a class="button is-primary" onClick={this.onJoinAction}>Join</a>
+                </div>
+            </div>
+        , document.getElementById('join-class'))
+    }
+
+    onJoinAction = () => {
+        add_student_to_class(this.state.join_code);
     }
 
     render() {
@@ -37,15 +64,22 @@ class MainList extends React.Component {
         } else if (this.props.type === 'assignments') {
             all_items = this.renderAssignmentListItems();
             title = 'Assignments';
-            new_text = <a class="has-text-right with-arrow" href={"/new_assignment?class_id=" + this.props.id}>New Assignment</a>;
+            // alert(this.props.is_owned);
+            if (this.props.is_owned == 1) {
+                new_text = <a class="has-text-right with-arrow" href={"/new_assignment.html?class_id=" + this.props.id}>New Assignment</a>;
+            }
         } else if (this.props.type === 'class') {
-            all_items = this.renderClassListItems();
+            all_items = this.renderClassListItems(0);
             title = 'Classes';
-            new_text = <a class="has-text-right with-arrow">New Class</a>;
+            new_text = <a class="has-text-right with-arrow" id="join-class" onClick={this.joinClass}>Join Class</a>;
+        } else if (this.props.type === 'owned_class') {
+            all_items = this.renderClassListItems(1);
+            title = 'Owned Classes';
+            new_text = <a class="has-text-right with-arrow" href="/new_class.html">New Class</a>;
         }
 
         return (
-            <div>
+            <div id="main-list">
                 <div className="block" id="title">
                     <h1>{title}</h1>
                     {new_text}
@@ -65,7 +99,7 @@ class ClassListItem extends React.Component {
             <div class='block'>
                 <div class="box submission_list_item">
                     <p class='has-text-weight-bold'>{this.props.name}</p>
-                    <a class='has-text-weight-bold has-text-right with-arrow' href={"assignments?id=" + this.props.id}>Assignments</a>
+                    <a class='has-text-weight-bold has-text-right with-arrow' href={"assignments.html?id=" + this.props.id + "&is_owned=" + this.props.is_owned}>Assignments</a>
                 </div>
                 {/* <a href='#'>Submission Number: {this.props.submission_number} Link: {this.props.link}</a> */}
             </div>
@@ -82,7 +116,7 @@ class SubmissionListItem extends React.Component {
             <div class='block'>
                 <div class="box submission_list_item">
                     <p class='has-text-weight-bold'>Submission by {this.props.user_name}</p>
-                    <a class='has-text-weight-bold has-text-right with-arrow' href={"uploads?id=" + this.props.id}>Grade</a>
+                    <a class='has-text-weight-bold has-text-right with-arrow' href={"uploads.html?id=" + this.props.id}>Grade</a>
                 </div>
                 {/* <a href='#'>Submission Number: {this.props.submission_number} Link: {this.props.link}</a> */}
             </div>
@@ -122,7 +156,7 @@ class AssignmentListItem extends React.Component {
                         </label>
                     </div>
                     <div className="list-button">
-                        <a class="button is-primary" href={'/submissions?id=' + this.props.id}>View Submissions: {this.props.upload_number}</a>
+                        <a class="button is-primary" href={'/submissions.html?id=' + this.props.id}>View Submissions: {this.props.upload_number}</a>
                     </div>
                     {/* <p class="has-text-right">Submissions: {this.props.upload_number}</p> */}
                 </div>
@@ -313,7 +347,7 @@ class NewAssignmentBox extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {'rubric_items': []};
+        this.state = { 'rubric_items': [] };
 
         this.rubric_descriptions = [];
         this.rubric_values = [];
@@ -323,7 +357,7 @@ class NewAssignmentBox extends React.Component {
     }
 
     newRubricItem = () => {
-        this.setState({'rubric_items': [...this.state.rubric_items, <NewRubricItem id={this.state.rubric_items.length} onDescriptionUpdate={this.onDescriptionUpdate} onValueUpdate={this.onValueUpdate}></NewRubricItem>]});
+        this.setState({ 'rubric_items': [...this.state.rubric_items, <NewRubricItem id={this.state.rubric_items.length} onDescriptionUpdate={this.onDescriptionUpdate} onValueUpdate={this.onValueUpdate}></NewRubricItem>] });
         this.rubric_descriptions.push('');
         this.rubric_values.push(0);
     }
@@ -338,7 +372,7 @@ class NewAssignmentBox extends React.Component {
         const resp = await new_assignment(this.assignment_name, rubric_items, this.props.class_id);
         // console.log(resp);
         if (resp.status === 200) {
-            window.location.replace('/assignments?id=' + this.props.class_id)
+            window.location.replace('/assignments.html?id=' + this.props.class_id)
         }
     }
 
@@ -384,7 +418,7 @@ class NewAssignmentBox extends React.Component {
 class NewRubricItem extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {'test': 10};
+        this.state = { 'test': 10 };
     }
 
     onDescriptionUpdate = (evt) => {
@@ -408,6 +442,49 @@ class NewRubricItem extends React.Component {
 
                 <div class="field">
                     <input class="input" type="text" placeholder="Points" onChange={this.onValueUpdate}></input>
+                </div>
+            </div>
+        )
+    }
+}
+
+class NewClassBox extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.class_name = '';
+    }
+
+    submit = async () => {
+        const resp = await new_class(this.class_name);
+        // console.log(resp);
+        if (resp.status === 200) {
+            window.location.replace('/classes')
+        } else if (resp.status === 401) {
+            alert('You must be a power user to create a class!');
+        }
+    }
+
+    onNameUpdate = (evt) => {
+        this.class_name = evt.target.value;
+    }
+
+    render() {
+        // this.newRubricItem();
+        return (
+            <div className="block">
+                <div className="box">
+                    <div class="field">
+                        <label class="label">Class Name</label>
+                        <div class="control">
+                            <input class="input" type="text" id="name" name="name" onChange={this.onNameUpdate}></input>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary" onClick={this.submit}>Submit</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -439,15 +516,18 @@ class Navigation extends React.Component {
         return (
             <nav class="navbar" role="navigation">
                 <div class="navbar-brand">
-                    <a class="navbar-item" href="https://bulma.io">
-                        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28"></img>
+                    <a class="navbar-item">
+                        <img src="logo.png" width="200" height="80"></img>
                     </a>
                 </div>
 
-                <div id="navbarBasicExample" class="navbar-menu">
+                <div id="navbarBasicExample">
                     <div class="navbar-start">
-                        <a class="navbar-item" href="/classes">
-                            Classes
+                        <a class="navbar-item" href="/classes.html">
+                            Student Classes
+                        </a>
+                        <a class="navbar-item" href="/owned_classes.html">
+                            Owned Classes
                         </a>
 
                         <div class="navbar-item has-dropdown is-hoverable">

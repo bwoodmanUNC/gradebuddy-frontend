@@ -20,15 +20,18 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="scripts/redirect_login.js"></script>
     <script type="text/babel" src="scripts/fetchers.js"></script>
     <script type="text/babel" src="components/components.js"></script>
     <script type="text/babel">
         let RenderDOM = async function () {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
+            const is_owned = urlParams.get('is_owned');
+            // alert(is_owned);
             const assignments = await get_class_assignments(id);
             console.log(assignments);
-            ReactDOM.render(<MainList id={id} data={assignments.data} type='assignments'></MainList>, document.getElementById('wrapper'));
+            ReactDOM.render(<MainList id={id} data={assignments.data} type='assignments' is_owned={is_owned}></MainList>, document.getElementById('wrapper'));
             ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();

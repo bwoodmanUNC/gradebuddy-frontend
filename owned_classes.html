@@ -25,12 +25,8 @@
     <script type="text/babel" src="components/components.js"></script>
     <script type="text/babel">
         let RenderDOM = async function () {
-            // const assignments = await get_class_assignments(id);
-            // console.log(assignments);
-            // ReactDOM.render(<MainList data={assignments.data} type='assignments'></MainList>, document.getElementById('wrapper'));
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('class_id');
-            ReactDOM.render(<NewAssignmentBox class_id={id}></NewAssignmentBox>, document.getElementById('wrapper'))
+            const classes = await get_owned_classes();
+            ReactDOM.render(<MainList data={classes.data} type='owned_class'></MainList>, document.getElementById('wrapper'));
             ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();
