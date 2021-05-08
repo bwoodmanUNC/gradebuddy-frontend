@@ -25,7 +25,8 @@
     <script type="text/babel" src="components/components.js"></script>
     <script type="text/babel">
         let RenderDOM = async function () {
-            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'));
+            const username = await get_user_name();
+            ReactDOM.render(<Navigation username={username}></Navigation>, document.getElementById('nav'));
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
             const indv_upload = await get_indv_upload(id);

@@ -26,8 +26,9 @@
     <script type="text/babel">
         let RenderDOM = async function () {
             const classes = await get_classes();
+            const username = await get_user_name();
+            ReactDOM.render(<Navigation username={username}></Navigation>, document.getElementById('nav'));
             ReactDOM.render(<MainList data={classes.data} type='class'></MainList>, document.getElementById('wrapper'));
-            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();
     </script>

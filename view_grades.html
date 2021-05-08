@@ -29,7 +29,8 @@
             const id = urlParams.get('id');
             const grades = await get_all_grades(id);
             console.log(grades);
-            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
+            const username = await get_user_name();
+            ReactDOM.render(<Navigation username={username}></Navigation>, document.getElementById('nav'));
             ReactDOM.render(<GradesPage id={id} grades={grades.data}></GradesPage>, document.getElementById('wrapper'));
         }
         RenderDOM();

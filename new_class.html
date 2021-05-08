@@ -29,8 +29,9 @@
             // ReactDOM.render(<MainList data={assignments.data} type='assignments'></MainList>, document.getElementById('wrapper'));
             // const urlParams = new URLSearchParams(window.location.search);
             // const id = urlParams.get('class_id');
+            const username = await get_user_name();
+            ReactDOM.render(<Navigation username={username}></Navigation>, document.getElementById('nav'));
             ReactDOM.render(<NewClassBox></NewClassBox>, document.getElementById('wrapper'))
-            ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
         }
         RenderDOM();
     </script>
