@@ -1,23 +1,23 @@
 class MainList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {join_code: ''}
+        this.state = { join_code: '' }
     }
 
     renderSubmissionListItems() {
         let all_items = [];
         for (let i = 0; i < this.props.data.length; i++) {
             console.log(this.props.data[i]);
-            all_items.push(<SubmissionListItem id={this.props.data[i].id} user_name={this.props.data[i].user_name}></SubmissionListItem>);
+            all_items.push(<SubmissionListItem id={this.props.data[i].id} user_name={this.props.data[i].user_name} is_owned={this.props.is_owned}></SubmissionListItem>);
         }
         return all_items;
     }
 
-    renderAssignmentListItems() {
+    renderAssignmentListItems(is_owned) {
         let all_items = [];
         for (let i = 0; i < this.props.data.length; i++) {
             console.log(this.props.data[i]);
-            all_items.push(<AssignmentListItem id={this.props.data[i].id} name={this.props.data[i].name} upload_number={this.props.data[i].num_uploads}></AssignmentListItem>);
+            all_items.push(<AssignmentListItem id={this.props.data[i].id} name={this.props.data[i].name} upload_number={this.props.data[i].num_uploads} is_owned={is_owned}></AssignmentListItem>);
         }
         return all_items;
     }
@@ -33,7 +33,7 @@ class MainList extends React.Component {
 
     joinCodeEdit = (e) => {
         console.log(e.target.value);
-        this.setState({'join_code': e.target.value});
+        this.setState({ 'join_code': e.target.value });
     }
 
     joinClass = () => {
@@ -46,7 +46,7 @@ class MainList extends React.Component {
                     <a class="button is-primary" onClick={this.onJoinAction}>Join</a>
                 </div>
             </div>
-        , document.getElementById('join-class'))
+            , document.getElementById('join-class'))
     }
 
     onJoinAction = () => {
@@ -62,7 +62,7 @@ class MainList extends React.Component {
             title = 'Submissions';
             new_text = '';
         } else if (this.props.type === 'assignments') {
-            all_items = this.renderAssignmentListItems();
+            all_items = this.renderAssignmentListItems(this.props.is_owned);
             title = 'Assignments';
             // alert(this.props.is_owned);
             if (this.props.is_owned == 1) {
@@ -108,6 +108,14 @@ class ClassListItem extends React.Component {
 }
 
 class SubmissionListItem extends React.Component {
+    viewAllGradesButton = () => {
+        if (this.props.is_owned == 1) {
+            return <a class='has-text-weight-bold has-text-right with-arrow' href={"view_grades.html?id=" + this.props.id}>View All Grades</a>;
+        } else {
+            return '';
+        }
+    }
+
     render() {
         return (
             // <div>
@@ -116,6 +124,7 @@ class SubmissionListItem extends React.Component {
             <div class='block'>
                 <div class="box submission_list_item">
                     <p class='has-text-weight-bold'>Submission by {this.props.user_name}</p>
+                    {this.viewAllGradesButton()}
                     <a class='has-text-weight-bold has-text-right with-arrow' href={"uploads.html?id=" + this.props.id}>Grade</a>
                 </div>
                 {/* <a href='#'>Submission Number: {this.props.submission_number} Link: {this.props.link}</a> */}
@@ -156,7 +165,7 @@ class AssignmentListItem extends React.Component {
                         </label>
                     </div>
                     <div className="list-button">
-                        <a class="button is-primary" href={'/submissions.html?id=' + this.props.id}>View Submissions: {this.props.upload_number}</a>
+                        <a class="button is-primary" href={'/submissions.html?id=' + this.props.id + '&is_owned=' + (this.props.is_owned ? '1' : '0')}>View Submissions: {this.props.upload_number}</a>
                     </div>
                     {/* <p class="has-text-right">Submissions: {this.props.upload_number}</p> */}
                 </div>
@@ -552,6 +561,52 @@ class Navigation extends React.Component {
                 </div>
                 {this.renderLoginArea()}
             </nav>
+        )
+    }
+}
+
+class GradesPage extends React.Component {
+
+    renderRows = () => {
+        console.log(this.props.grades)
+        let arr = [];
+        this.props.grades.forEach(x => {
+            arr.push(<GradesRow username={x.username} grade={x.overall_grade}></GradesRow>)
+        });
+        return arr;
+    }
+
+    render() {
+
+        return (
+            <div>
+                <div className="block" id="title">
+                    <h1>Grades</h1>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Overall Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.renderRows()}
+                    </tbody>
+                </table>
+            </div>
+            
+        )
+    }
+}
+
+class GradesRow extends React.Component {
+    render() {
+        return (
+            <tr>
+                <td>{this.props.username}</td>
+                <td>{(this.props.grade * 100).toString() + '%'}</td>
+            </tr>
         )
     }
 }

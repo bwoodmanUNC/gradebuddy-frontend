@@ -1,4 +1,4 @@
-const URL_BASE = 'https://gradebuddy.herokuapp.com';
+const URL_BASE = 'http://localhost:8000';
 
 async function get_submissions(assignment_id) {
     // const edited_tweet = prompt('Edit tweet:', body);
@@ -155,6 +155,18 @@ async function add_student_to_class(join_code) {
         headers: {
             Authorization: 'Bearer '  + localStorage.getItem('accessToken'),
         },
+    });
+
+    return result;
+}
+
+async function get_all_grades(id) {
+    const result = await axios({
+        method: 'get',
+        url: URL_BASE + '/list/submission_grades/' + id.toString(),
+        headers: {
+            Authorization: 'Bearer '  + localStorage.getItem('accessToken'),
+        }
     });
 
     return result;

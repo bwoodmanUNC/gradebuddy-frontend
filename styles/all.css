@@ -52,7 +52,7 @@ body {
 
 .submission_list_item{
     display: grid;
-    grid-template-columns: .5fr .5fr;
+    grid-template-columns: .6fr .2fr .2fr;
 }
 
 #indv-upload-comp {

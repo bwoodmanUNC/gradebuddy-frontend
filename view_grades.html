@@ -27,11 +27,10 @@
         let RenderDOM = async function () {
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
-            const is_owned = urlParams.get('is_owned');
-            const submissions = await get_submissions(id);
-            console.log(submissions);
-            ReactDOM.render(<MainList data={submissions.data} type='submissions' is_owned={is_owned}></MainList>, document.getElementById('wrapper'));
+            const grades = await get_all_grades(id);
+            console.log(grades);
             ReactDOM.render(<Navigation></Navigation>, document.getElementById('nav'))
+            ReactDOM.render(<GradesPage id={id} grades={grades.data}></GradesPage>, document.getElementById('wrapper'));
         }
         RenderDOM();
     </script>
