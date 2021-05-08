@@ -27,7 +27,8 @@
         let RenderDOM = async function () {
             const classes = await get_owned_classes();
             const username = await get_user_name();
-            ReactDOM.render(<Navigation username={username}></Navigation>, document.getElementById('nav'));
+            const joke = await get_joke();
+            ReactDOM.render(<Navigation username={username} joke={joke}></Navigation>, document.getElementById('nav'));
             ReactDOM.render(<MainList data={classes.data} type='owned_class'></MainList>, document.getElementById('wrapper'));
         }
         RenderDOM();
