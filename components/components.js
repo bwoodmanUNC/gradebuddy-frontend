@@ -97,7 +97,7 @@ class ClassListItem extends React.Component {
     render() {
         return (
             <div class='block'>
-                <div class="box submission_list_item">
+                <div class="box class_list_item">
                     <p class='has-text-weight-bold'>{this.props.name}</p>
                     <a class='has-text-weight-bold has-text-right with-arrow' href={"assignments.html?id=" + this.props.id + "&is_owned=" + this.props.is_owned}>Assignments</a>
                 </div>
