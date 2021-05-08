@@ -1,0 +1,44 @@
+p {
+    color:rgba(0, 0, 0, 0.788);
+}
+
+body {
+    background-color: #BCD8DC;
+
+}
+
+#wrapper {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    height: 100%;
+    width: 60%;
+    padding: 0 10%;
+    z-index: 200;
+}
+
+#spotlight h1 {
+    font-size: 4em;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.button.is-primary {
+    background-color:#FFD685;
+    color: rgba(0, 0, 0, 0.788);
+}
+
+.button.is-primary:hover {
+    background-color: #2E4052;
+}
+
+#background {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    /* z-index: 100; */
+}
