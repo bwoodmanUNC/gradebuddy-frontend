@@ -26,7 +26,7 @@ class MainList extends React.Component {
         let all_items = [];
         for (let i = 0; i < this.props.data.length; i++) {
             console.log(this.props.data[i]);
-            all_items.push(<ClassListItem id={this.props.data[i].id} name={this.props.data[i].name} is_owned={is_owned}></ClassListItem>);
+            all_items.push(<ClassListItem id={this.props.data[i].id} name={this.props.data[i].name} is_owned={is_owned} join_code={this.props.data[i].join_code}></ClassListItem>);
         }
         return all_items;
     }
@@ -94,11 +94,16 @@ class MainList extends React.Component {
 }
 
 class ClassListItem extends React.Component {
+    getCode = () => {
+        return this.props.is_owned == 1 ? (' (Join Code: ' + this.props.join_code + ')'):''
+    }   
+
     render() {
+
         return (
             <div class='block'>
                 <div class="box class_list_item">
-                    <p class='has-text-weight-bold'>{this.props.name}</p>
+                    <p class='has-text-weight-bold'>{this.props.name + this.getCode()}</p>
                     <a class='has-text-weight-bold has-text-right with-arrow' href={"assignments.html?id=" + this.props.id + "&is_owned=" + this.props.is_owned}>Assignments</a>
                 </div>
                 {/* <a href='#'>Submission Number: {this.props.submission_number} Link: {this.props.link}</a> */}
