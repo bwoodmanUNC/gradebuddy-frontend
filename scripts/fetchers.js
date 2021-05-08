@@ -1,4 +1,5 @@
-const URL_BASE = 'http://localhost:8000';
+const URL_BASE = 'https://gradebuddy.herokuapp.com';
+// const URL_BASE = 'http://localhost:8000';
 
 async function get_submissions(assignment_id) {
     // const edited_tweet = prompt('Edit tweet:', body);
